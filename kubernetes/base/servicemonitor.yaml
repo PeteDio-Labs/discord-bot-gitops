@@ -5,6 +5,7 @@ metadata:
   namespace: discord-bot
   labels:
     app: discord-bot
+    release: kube-prom-stack
 spec:
   selector:
     matchLabels:
