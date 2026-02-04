@@ -85,9 +85,9 @@ if [[ -z "$SUMMARIZER_ENABLED" ]]; then
     echo -e "${YELLOW}Using default SUMMARIZER_ENABLED: $SUMMARIZER_ENABLED${NC}"
 fi
 
-if [[ -z "$TOOL_EXECUTOR_LOGGING" ]]; then
-    TOOL_EXECUTOR_LOGGING="false"
-    echo -e "${YELLOW}Using default TOOL_EXECUTOR_LOGGING: $TOOL_EXECUTOR_LOGGING${NC}"
+if [[ -z "$LOG_LEVEL" ]]; then
+    LOG_LEVEL="info"
+    echo -e "${YELLOW}Using default LOG_LEVEL: $LOG_LEVEL${NC}"
 fi
 
 # Create sealed-secrets directory
@@ -107,7 +107,7 @@ kubectl create secret generic discord-bot-credentials \
     --from-literal=OLLAMA_TIMEOUT="$OLLAMA_TIMEOUT" \
     --from-literal=SUMMARIZER_MODEL="$SUMMARIZER_MODEL" \
     --from-literal=SUMMARIZER_ENABLED="$SUMMARIZER_ENABLED" \
-    --from-literal=TOOL_EXECUTOR_LOGGING="$TOOL_EXECUTOR_LOGGING" \
+    --from-literal=LOG_LEVEL="$LOG_LEVEL" \
     --dry-run=client -o yaml | \
 kubeseal --format yaml > "$SEALED_SECRETS_DIR/discord-bot-credentials.yaml"
 
