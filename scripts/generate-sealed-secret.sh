@@ -38,7 +38,7 @@ if ! kubectl cluster-info &> /dev/null; then
 fi
 
 # Load from .env file if it exists
-ENV_FILE="${PROJECT_ROOT}/../discord-bot/.env"
+ENV_FILE="${PROJECT_ROOT}/../../development/discord-bot/.env"
 if [[ -f "$ENV_FILE" ]]; then
     echo -e "${GREEN}Loading values from .env file...${NC}"
     source "$ENV_FILE"
@@ -75,6 +75,21 @@ if [[ -z "$OLLAMA_TIMEOUT" ]]; then
     echo -e "${YELLOW}Using default OLLAMA_TIMEOUT: $OLLAMA_TIMEOUT${NC}"
 fi
 
+if [[ -z "$SUMMARIZER_MODEL" ]]; then
+    SUMMARIZER_MODEL="qwen2.5:3b"
+    echo -e "${YELLOW}Using default SUMMARIZER_MODEL: $SUMMARIZER_MODEL${NC}"
+fi
+
+if [[ -z "$SUMMARIZER_ENABLED" ]]; then
+    SUMMARIZER_ENABLED="true"
+    echo -e "${YELLOW}Using default SUMMARIZER_ENABLED: $SUMMARIZER_ENABLED${NC}"
+fi
+
+if [[ -z "$TOOL_EXECUTOR_LOGGING" ]]; then
+    TOOL_EXECUTOR_LOGGING="false"
+    echo -e "${YELLOW}Using default TOOL_EXECUTOR_LOGGING: $TOOL_EXECUTOR_LOGGING${NC}"
+fi
+
 # Create sealed-secrets directory
 mkdir -p "$SEALED_SECRETS_DIR"
 
@@ -90,6 +105,9 @@ kubectl create secret generic discord-bot-credentials \
     --from-literal=OLLAMA_HOST="$OLLAMA_HOST" \
     --from-literal=OLLAMA_MODEL="$OLLAMA_MODEL" \
     --from-literal=OLLAMA_TIMEOUT="$OLLAMA_TIMEOUT" \
+    --from-literal=SUMMARIZER_MODEL="$SUMMARIZER_MODEL" \
+    --from-literal=SUMMARIZER_ENABLED="$SUMMARIZER_ENABLED" \
+    --from-literal=TOOL_EXECUTOR_LOGGING="$TOOL_EXECUTOR_LOGGING" \
     --dry-run=client -o yaml | \
 kubeseal --format yaml > "$SEALED_SECRETS_DIR/discord-bot-credentials.yaml"
 
