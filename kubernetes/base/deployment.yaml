@@ -31,6 +31,12 @@ spec:
             # Override QBIT_HOST to use internal Kubernetes service that routes to LAN
             - name: QBIT_HOST
               value: "http://qbittorrent-external:8080"
+            - name: MISSION_CONTROL_URL
+              value: "http://mission-control-backend.mission-control.svc.cluster.local:3000"
+            - name: NOTIFICATION_SERVICE_URL
+              value: "http://notification-service.mission-control.svc.cluster.local:3002"
+            - name: MISSION_CONTROL_ENABLED
+              value: "true"
           ports:
             - name: metrics
               containerPort: 9090
