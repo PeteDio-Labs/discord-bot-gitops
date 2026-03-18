@@ -1,40 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: discord-bot
+  name: pete-bot
   labels:
-    app.kubernetes.io/name: discord-bot
+    app.kubernetes.io/name: pete-bot
     app.kubernetes.io/component: bot
 spec:
   replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app.kubernetes.io/name: discord-bot
+      app.kubernetes.io/name: pete-bot
       app.kubernetes.io/component: bot
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: discord-bot
+        app.kubernetes.io/name: pete-bot
         app.kubernetes.io/component: bot
     spec:
       containers:
-        - name: discord-bot
-          image: docker.toastedbytes.com/discord-ai-bot:latest
+        - name: pete-bot
+          image: docker.toastedbytes.com/pete-bot:latest
           imagePullPolicy: Always
           envFrom:
             - secretRef:
-                name: discord-bot-credentials
+                name: pete-bot-credentials
           env:
-            # Override QBIT_HOST to use internal Kubernetes service that routes to LAN
-            - name: QBIT_HOST
-              value: "http://qbittorrent-external:8080"
             - name: MISSION_CONTROL_URL
               value: "http://mission-control-backend.mission-control.svc.cluster.local:3000"
             - name: NOTIFICATION_SERVICE_URL
               value: "http://notification-service.mission-control.svc.cluster.local:3002"
+            - name: WEB_SEARCH_SERVICE_URL
+              value: "http://web-search-service.web-search.svc.cluster.local:3003"
             - name: MISSION_CONTROL_ENABLED
               value: "true"
           ports:

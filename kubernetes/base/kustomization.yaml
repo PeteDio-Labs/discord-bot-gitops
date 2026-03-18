@@ -2,14 +2,14 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 metadata:
-  name: discord-bot
+  name: pete-bot
 
 resources:
   - namespace.yaml
   - deployment.yaml
   - service.yaml
   # Sealed secrets for secure credential management
-  - sealed-secrets/discord-bot-credentials.yaml
+  - sealed-secrets/pete-bot-credentials.yaml
   - sealed-secrets/nexus-registry.yaml
 
 # Use labels with includeSelectors: false to avoid breaking external services

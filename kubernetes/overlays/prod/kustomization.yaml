@@ -1,12 +1,10 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: discord-bot
+namespace: pete-bot
 
 resources:
   - ../../base
-  # External service in separate resource to avoid selector issues
-  - qbittorrent-external-service.yaml
 
 # Use labels with includeSelectors: false to avoid breaking external services
 labels:
@@ -15,5 +13,5 @@ labels:
     includeSelectors: false
 
 images:
-  - name: docker.toastedbytes.com/discord-ai-bot
+  - name: docker.toastedbytes.com/pete-bot
     newTag: latest
