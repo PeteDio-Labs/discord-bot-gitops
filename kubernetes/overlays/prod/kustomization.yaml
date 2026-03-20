@@ -10,4 +10,4 @@ labels:
   includeSelectors: false
 images:
 - name: docker.toastedbytes.com/pete-bot
-  digest: sha256:4922288ac563ea6eded4c189126defbee95c0483444e01dee57086b646195612
+  digest: sha256:2c4dd7787a69009afa82f6de424b3b1bdd3988282df5e7d012ef6890acd80882
